@@ -1,6 +1,13 @@
-# Simple Login Spring Boot Application
+# Enhanced Login/Register Spring Boot Application
 
-A minimal Spring Boot application that accepts login credentials and stores them in PostgreSQL.
+A Spring Boot application with user registration and login functionality.
+
+## Features
+
+- User registration with unique username validation
+- User authentication
+- REST API endpoints for Postman testing
+- Web-based UI with HTML/CSS
 
 ## Prerequisites
 
@@ -21,11 +28,20 @@ mvn clean install
 mvn spring-boot:run
 ```
 
+## Web UI Usage
+
+1. Access the application at `http://localhost:8080`
+2. You can either register a new account or login with existing credentials
+3. The app validates usernames to ensure they are unique
+4. After successful login, you'll be redirected to a welcome page
+
 ## Testing with Postman
 
-1. Send a POST request to `http://localhost:8080/login`
-2. Set the Content-Type header to `application/json`
-3. Set the request body to:
+### Registration API
+
+- Send a POST request to `http://localhost:8080/api/register`
+- Set the Content-Type header to `application/json`
+- Set the request body to:
 
 ```json
 {
@@ -34,12 +50,27 @@ mvn spring-boot:run
 }
 ```
 
-You should receive a response:
+Possible responses:
+
+- 200 OK: `{"message":"Registration successful"}`
+- 409 Conflict: `{"message":"Username already exists"}`
+
+### Login API
+
+- Send a POST request to `http://localhost:8080/api/login`
+- Set the Content-Type header to `application/json`
+- Set the request body to:
 
 ```json
 {
-  "message": "Successful login"
+  "username": "john",
+  "password": "1234"
 }
 ```
 
-The credentials will be stored in the `login_details` table in the PostgreSQL database.
+Possible responses:
+
+- 200 OK: `{"message":"Successful login"}`
+- 401 Unauthorized: `{"message":"Invalid username or password"}`
+
+The credentials are stored in the `login_details` table in the PostgreSQL database.
